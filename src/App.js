@@ -28,7 +28,7 @@ function App()
       } 
       catch (error)
       {
-        setErrorMsg("Oops something went wrong...")
+        setErrorMsg(`Oops something went wrong... ${error.message}`)
         console.log(error.message)
       }
     }
@@ -47,7 +47,7 @@ function App()
       <div className="basketBanner">
 
         <button className="basketButton">
-          <img className="basketIcon" src = {basket}  alt="cat pic"></img>
+          <img className="basketIcon" src = {basket}  alt="basket pic"></img>
         </button>
 
       </div>
@@ -60,7 +60,11 @@ function App()
           return (
               <div className="catItem">
                 <img className="catPic" src = {cat.url} alt="cat pic"></img>
-                <div className="catInfo">cat info goes here</div>
+                <div className="catItemInner">
+                  <div className="catInfo">cat info goes here</div>
+                  <button className="catButton">Placeholder</button>
+                  <p>Placeholder</p>
+                </div>
               </div>
           )
         })}
