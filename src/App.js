@@ -1,23 +1,72 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from "react";
+import basket from "./images/cart.png";
 import './App.css';
 
-function App() {
+function App()
+{
+  const [errorMsg, setErrorMsg] = useState('');
+  const [cats, setCats] = useState([]);
+
+
+
+  useEffect(() =>
+  {
+    async function fetchData()
+    {
+      try {
+        setErrorMsg('')
+        const response = await fetch("https://api.thecatapi.com/v1/images/search?limit=10");
+        
+        if(!response.ok)
+        {
+          throw new Error(response.statusText)
+        }
+
+        const data = await response.json();
+        setCats(data)
+
+      } 
+      catch (error)
+      {
+        setErrorMsg("Oops something went wrong...")
+        console.log(error.message)
+      }
+    }
+    
+    fetchData()
+  }, [])
+
+  if(errorMsg !== '')
+  {
+    return <h1>{errorMsg}</h1>
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        
+      <div className="basketBanner">
+
+        <button className="basketButton">
+          <img className="basketIcon" src = {basket}  alt="cat pic"></img>
+        </button>
+
+      </div>
+
+
+      <div className="catList">
+
+        {cats.map((cat, index) => 
+        {
+          return (
+              <div className="catItem">
+                <img className="catPic" src = {cat.url} alt="cat pic"></img>
+                <div className="catInfo">cat info goes here</div>
+              </div>
+          )
+        })}
+
+      </div>
+
     </div>
   );
 }
