@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { faker } from '@faker-js/faker';
 import basket from "./images/cart.png";
 import './App.css';
+
+
+
+
 
 function App()
 {
@@ -23,7 +28,16 @@ function App()
         }
 
         const data = await response.json();
-        setCats(data)
+        const catData = data.map((cat, index) => {
+          return {
+            catImage: cat.url,
+            catName: faker.name.firstName(),
+            sellerName: faker.internet.userName(),
+            sellerLocation:faker.address.country(),
+            catCost:faker.finance.amount()
+          }
+        })
+        setCats(catData)
 
       } 
       catch (error)
@@ -59,11 +73,13 @@ function App()
         {
           return (
               <div className="catItem">
-                <img className="catPic" src = {cat.url} alt="cat pic"></img>
+                <img className="catPic" src = {cat.catImage} alt="cat pic"></img>
                 <div className="catItemInner">
-                  <div className="catInfo">cat info goes here</div>
-                  <button className="catButton">Placeholder</button>
-                  <p>Placeholder</p>
+                  <div className="catInfo"> {cat.catName} </div>
+                  <p>Seller: {cat.sellerName}</p>
+                  <p>Cost: £{cat.catCost}</p>
+                  <p>Location: {cat.sellerLocation}</p>
+                  <button className="catButton">Add to basket</button>
                 </div>
               </div>
           )
