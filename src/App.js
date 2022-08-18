@@ -11,6 +11,8 @@ function App()
 {
   const [errorMsg, setErrorMsg] = useState('');
   const [cats, setCats] = useState([]);
+  const [basketCats,setBasketCats] = useState([]);
+  const [basketCount,setBasketCount] = useState(0);
 
 
 
@@ -55,6 +57,17 @@ function App()
     return <h1>{errorMsg}</h1>
   }
 
+
+  function addToBasket(c)
+  {
+    let bCats = basketCats;
+    bCats.push(c);
+    setBasketCats(bCats);
+
+    setBasketCount(basketCats.length);
+  }
+
+
   return (
     <div className="App">
         
@@ -62,6 +75,7 @@ function App()
 
         <button className="basketButton">
           <img className="basketIcon" src = {basket}  alt="basket pic"></img>
+          <p className="basketCount">{basketCount}</p>
         </button>
 
       </div>
@@ -72,14 +86,14 @@ function App()
         {cats.map((cat, index) => 
         {
           return (
-              <div className="catItem">
+              <div className="catItem" key={index}>
                 <img className="catPic" src = {cat.catImage} alt="cat pic"></img>
                 <div className="catItemInner">
                   <div className="catInfo"> {cat.catName} </div>
                   <p>Seller: {cat.sellerName}</p>
                   <p>Cost: £{cat.catCost}</p>
                   <p>Location: {cat.sellerLocation}</p>
-                  <button className="catButton">Add to basket</button>
+                  <button onClick={()=> addToBasket(cat)} className="catButton">Add to basket</button>
                 </div>
               </div>
           )
