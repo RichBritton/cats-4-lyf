@@ -88,6 +88,13 @@ body {
   transform: translateY(2px);
   background-color: rgba(32, 32, 32, 0.753);
 }
+
 .catButtonBTT {
   margin: 2% 0 2% 1%;
+}
+
+.basketCount {
+  color: orange;
+  font-size: 30px;
+  font-weight: 700;
 }

@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
+import { faker } from '@faker-js/faker';
 import basket from "./images/cart.png";
 import './App.css';
+
+
+
+
 
 function App()
 {
   const [errorMsg, setErrorMsg] = useState('');
   const [cats, setCats] = useState([]);
+  const [basketCats,setBasketCats] = useState([]);
+  const [basketCount,setBasketCount] = useState(0);
 
 const ScrollToTop = () => {
   const scrollToTop = () => {
@@ -32,7 +39,16 @@ const ScrollToTop = () => {
         }
 
         const data = await response.json();
-        setCats(data)
+        const catData = data.map((cat, index) => {
+          return {
+            catImage: cat.url,
+            catName: faker.name.firstName(),
+            sellerName: faker.internet.userName(),
+            sellerLocation:faker.address.country(),
+            catCost:faker.finance.amount()
+          }
+        })
+        setCats(catData)
 
       } 
       catch (error)
@@ -50,6 +66,17 @@ const ScrollToTop = () => {
     return <h1>{errorMsg}</h1>
   }
 
+
+  function addToBasket(c)
+  {
+    let bCats = basketCats;
+    bCats.push(c);
+    setBasketCats(bCats);
+
+    setBasketCount(basketCats.length);
+  }
+
+
   return (
     <>
     <div className="App">
@@ -58,6 +85,7 @@ const ScrollToTop = () => {
 
         <button className="basketButton">
           <img className="basketIcon" src = {basket}  alt="basket pic"></img>
+          <p className="basketCount">{basketCount}</p>
         </button>
 
       </div>
@@ -68,12 +96,14 @@ const ScrollToTop = () => {
         {cats.map((cat, index) => 
         {
           return (
-              <div className="catItem">
-                <img className="catPic" src = {cat.url} alt="cat pic"></img>
+              <div className="catItem" key={index}>
+                <img className="catPic" src = {cat.catImage} alt="cat pic"></img>
                 <div className="catItemInner">
-                  <div className="catInfo">cat info goes here</div>
-                  <button className="catButton">Placeholder</button>
-                  <p>Placeholder</p>
+                  <div className="catInfo"> {cat.catName} </div>
+                  <p>Seller: {cat.sellerName}</p>
+                  <p>Cost: £{cat.catCost}</p>
+                  <p>Location: {cat.sellerLocation}</p>
+                  <button onClick={()=> addToBasket(cat)} className="catButton">Add to basket</button>
                 </div>
               </div>
           )
