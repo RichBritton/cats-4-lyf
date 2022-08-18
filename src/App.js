@@ -7,7 +7,16 @@ function App()
   const [errorMsg, setErrorMsg] = useState('');
   const [cats, setCats] = useState([]);
 
-
+const ScrollToTop = () => {
+  const scrollToTop = () => {
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  };
+  return (
+    <div>
+      <button type='button' onClick={scrollToTop} className="catButtonBTT">Back to top</button>
+    </div>
+  )
+};
 
   useEffect(() =>
   {
@@ -42,6 +51,7 @@ function App()
   }
 
   return (
+    <>
     <div className="App">
         
       <div className="basketBanner">
@@ -72,6 +82,8 @@ function App()
       </div>
 
     </div>
+    <ScrollToTop />
+    </>
   );
 }
 
