@@ -2,17 +2,15 @@ import React, { useState, useEffect } from "react";
 import { faker } from '@faker-js/faker';
 import basket from "./images/cart.png";
 import './App.css';
+import Modal from './Modal'
 
-
-
-
-
-function App()
-{
+function App() {
   const [errorMsg, setErrorMsg] = useState('');
   const [cats, setCats] = useState([]);
   const [basketCats,setBasketCats] = useState([]);
   const [basketCount,setBasketCount] = useState(0);
+  const [show, setShow] = useState(false);
+  const [selectedAnimal, setSelectedAnimal] = useState({});
 
 const ScrollToTop = () => {
   const scrollToTop = () => {
@@ -25,16 +23,13 @@ const ScrollToTop = () => {
   )
 };
 
-  useEffect(() =>
-  {
-    async function fetchData()
-    {
+  useEffect(() => {
+    async function fetchData() {
       try {
         setErrorMsg('')
         const response = await fetch("https://api.thecatapi.com/v1/images/search?limit=10");
         
-        if(!response.ok)
-        {
+        if(!response.ok) {
           throw new Error(response.statusText)
         }
 
@@ -51,8 +46,7 @@ const ScrollToTop = () => {
         setCats(catData)
 
       } 
-      catch (error)
-      {
+      catch (error) {
         setErrorMsg(`Oops something went wrong... ${error.message}`)
         console.log(error.message)
       }
@@ -61,14 +55,12 @@ const ScrollToTop = () => {
     fetchData()
   }, [])
 
-  if(errorMsg !== '')
-  {
+  if(errorMsg !== '') {
     return <h1>{errorMsg}</h1>
   }
 
 
-  function addToBasket(c)
-  {
+  function addToBasket(c) {
     let bCats = basketCats;
     bCats.push(c);
     setBasketCats(bCats);
@@ -76,6 +68,10 @@ const ScrollToTop = () => {
     setBasketCount(basketCats.length);
   }
 
+  const handleClick = (animalObj) => {
+    setSelectedAnimal(animalObj)
+    setShow(true)
+  }
 
   return (
     <>
@@ -92,8 +88,7 @@ const ScrollToTop = () => {
 
       <div className="catList">
 
-        {cats.map((cat, index) => 
-        {
+        {cats.map((cat, index) => {
           return (
               <div className="catItem" key={index}>
                 <img className="catPic" src = {cat.catImage} alt="cat pic"></img>
@@ -102,11 +97,15 @@ const ScrollToTop = () => {
                   <p>Seller: {cat.sellerName}</p>
                   <p>Cost: £{cat.catCost}</p>
                   <p>Location: {cat.sellerLocation}</p>
-                  <button onClick={()=> addToBasket(cat)} className="catButton">Add to basket</button>
+                  <div>
+                    <button onClick={()=> addToBasket(cat)} className="catButton">Add to basket</button>
+                    <button onClick={() => handleClick(currentAnimal)} className="catButton">Learn More</button>
+                  </div>
                 </div>
               </div>
           )
         })}
+        {show && <Modal closeModal={setShow} animal={selectedAnimal} />}
 
       </div>
 
