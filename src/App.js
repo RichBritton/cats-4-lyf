@@ -90,7 +90,6 @@ const ScrollToTop = () => {
 
       </div>
 
-
       <div className="catList">
 
         {cats.map((cat, index) => 
