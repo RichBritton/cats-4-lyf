@@ -55,13 +55,13 @@ function App() {
       <div className="nav">
         <h2>Cats4Lyf</h2>
         <div className="basketBanner">
-          <button className="basketButton">
+          <button className="basketButton" onClick={() => setSidebar(!sidebar)}>
             <img className="basketIcon" src={basket} alt="basket pic"></img>
           </button>
         </div>
       </div>
 
-      <div className="basket-sidebar">
+      <div className={sidebar ? "basket-sidebar basket-sidebar-open" : "basket-sidebar"}>
         <h2>Your Cart:</h2>
         <div className="basket-links">
           <div className="image">
