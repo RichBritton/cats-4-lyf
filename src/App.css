@@ -7,6 +7,7 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
+  animation: change 20s infinite ease-in-out 5s;
 }
 
 .App {
@@ -29,7 +30,7 @@ body {
 .basketButton {
   border-style:none;
   height: 8%;
-  background-color: white;
+  /* background-color: white; */
   cursor: pointer;
   position: fixed;
 }
@@ -97,4 +98,26 @@ body {
   color: orange;
   font-size: 30px;
   font-weight: 700;
+  /* background-color: rgb(255, 255, 255, 0.7); */
+}
+
+@keyframes change {
+  0% {
+    background-image: url(https://cutewallpaper.org/22/cats-spring-wallpapers/6778014.jpg);
+  }
+  20% {
+    background-image: url(https://cdn.wallpapersafari.com/36/8/RmU0Au.jpg);
+  }
+  40% {
+    background-image: url(https://cache.desktopnexus.com/thumbseg/448/448922-bigthumbnail.jpg);
+  }
+  60% {
+    background-image: url(https://cdn.99images.com/photos/wallpapers/animals-birds/cute-cat%20android-iphone-desktop-hd-backgrounds-wallpapers-1080p-4k-3wjjo.jpg);
+  }
+  80% {
+    background-image: url(https://cdn.wallpapersafari.com/7/98/heQkrg.jpg);
+  }
+  100% {
+    background-image: url(https://c4.wallpaperflare.com/wallpaper/7/193/231/summer-cats-sunshine-wallpaper-preview.jpg);
+  }
 }
